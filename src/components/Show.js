@@ -11,11 +11,12 @@ const Show = () => {
     //1- Configuramos los hooks
     const [products, setProducts] = useState([])
 
-    //2- Referenciamos a la DB de firestore
+    //2- Referencia a la colección de productos en Firestore
     const productsCollection = collection(db, "products")
 
-    //3- Funcion para mostrar todos los documentos
+    //3- Función para obtener todos los productos de Firestore
     const getProducts = async () => {
+        //Realiza una consulta a la base de datos y actualiza el estado con los resultados
         const data = await getDocs(productsCollection)
         //    console.log(data.docs)
         setProducts(
@@ -24,14 +25,15 @@ const Show = () => {
         // console.log(products)
     }
 
-    //4- Funcion para eliminar documentos
+    //4- Función para eliminar un producto de Firestore
     const deleteProduct = async (id) => {
+        //Elimina el documento con el ID especificado y actualiza la lista de productos
         const productDoc = doc(db, "products", id)
         await deleteDoc(productDoc)
         getProducts()
     }
 
-    //5- Funcion de confirmación para sweet alert 2
+    //5- Funcion de confirmación para sweet alert 2 para la hora de eliminar algún producto
     const confirmDelete = (id) =>{
         MySwal.fire({
             title: 'Remover este producto?',
